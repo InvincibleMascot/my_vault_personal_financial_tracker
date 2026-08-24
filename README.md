@@ -1,28 +1,70 @@
 # 💰 The Vault
 
-> A personal finance and ledger application built with **Laravel** and **PostgreSQL**.
+<div align="center">
 
-**The Vault** provides a simple and organized way to track daily transactions, monitor income and expenses, manage accounts, and set savings goals—all in one place.
+### Your Personal Finance & Ledger Companion
+
+**Track your income, manage expenses, monitor accounts, and work toward your savings goals — all in one place.**
+
+Built with **Laravel · PHP · PostgreSQL · Blade · JavaScript**
+
+</div>
 
 ---
 
-## 🗄️ Database Schema
+## 📖 About The Project
 
-The application uses the following PostgreSQL tables.
+**The Vault** is a personal finance and ledger management application designed to give users a clear and organized view of their financial activity.
 
-### 👤 Users & Access
+Managing personal finances can become difficult when income, expenses, bank accounts, cash, and savings goals are tracked separately. **The Vault brings these financial activities together into one centralized application.**
 
-| Table        | Description                                      |
-| ------------ | ------------------------------------------------ |
-| `users`      | Stores user accounts and authentication details. |
-| `user_types` | Defines user roles and access permissions.       |
+With The Vault, users can record daily transactions, categorize spending, track different payment methods, monitor account balances, manage income sources, and create savings goals.
 
-<details>
-<summary><strong>users</strong></summary>
+The goal of the project is simple:
 
-| Column              | Type           | Notes                        |
+> **Help users better understand where their money comes from, where it goes, and how their financial position changes over time.**
+
+---
+
+## ✨ Key Features
+
+* 💸 **Transaction Management** — Record and organize daily income and expenses.
+* 🏦 **Account Management** — Manage bank accounts and track account balances.
+* 💵 **Cash Tracking** — Keep track of cash transactions separately.
+* 📊 **Income Monitoring** — Record income and monitor different income sources.
+* 🗂️ **Transaction Categories** — Organize transactions using types, methods, and categories.
+* 🎯 **Savings Goals** — Create and track personal financial goals.
+* ⏳ **Savings Duration** — Define how long you plan to save toward a goal.
+* 📈 **Financial Overview** — Get a clearer picture of your overall financial activity.
+* 👤 **User Management** — Support users and different access levels.
+
+---
+
+## 🛠️ Technology Stack
+
+| Technology       | Purpose                  |
+| ---------------- | ------------------------ |
+| **Laravel**      | Backend Framework        |
+| **PHP**          | Server-side Development  |
+| **PostgreSQL**   | Database                 |
+| **Blade**        | Frontend Templating      |
+| **JavaScript**   | Client-side Interactions |
+| **CSS**          | Styling                  |
+| **Eloquent ORM** | Database Management      |
+
+---
+
+# 🗄️ Database Design
+
+The Vault uses PostgreSQL to organize users, accounts, transactions, income, and savings goals.
+
+## 👤 Users & Access
+
+### `users`
+
+| Column              | Type           | Description                  |
 | ------------------- | -------------- | ---------------------------- |
-| `id`                | `int`          | Primary Key                  |
+| `id`                | `int`          | 🔑 Primary Key               |
 | `name`              | `varchar(255)` | Required                     |
 | `email`             | `varchar(255)` | Unique, lowercase, validated |
 | `email_verified_at` | `timestamp`    | Nullable                     |
@@ -30,109 +72,76 @@ The application uses the following PostgreSQL tables.
 | `user_type_id`      | `integer`      | User type reference          |
 | `created_by`        | `integer`      | Creator                      |
 | `updated_by`        | `integer`      | Last updater                 |
-| `created_at`        | `timestamp`    |                              |
-| `updated_at`        | `timestamp`    |                              |
+| `created_at`        | `timestamp`    | Record creation time         |
+| `updated_at`        | `timestamp`    | Last update time             |
 
-</details>
+### `user_types`
 
-<details>
-<summary><strong>user_types</strong></summary>
-
-| Column       | Type        |
-| ------------ | ----------- |
-| `id`         | `int`       |
-| `user_type`  | `varchar`   |
-| `access_to`  | `text`      |
-| `created_at` | `timestamp` |
-| `updated_at` | `timestamp` |
-
-</details>
+| Column       | Type        | Description          |
+| ------------ | ----------- | -------------------- |
+| `id`         | `int`       | 🔑 Primary Key       |
+| `user_type`  | `varchar`   | User role/type       |
+| `access_to`  | `text`      | Access permissions   |
+| `created_at` | `timestamp` | Record creation time |
+| `updated_at` | `timestamp` | Last update time     |
 
 ---
 
-### 🏦 Accounts
+## 🏦 Account Management
 
-| Table          | Description                          |
-| -------------- | ------------------------------------ |
-| `account_type` | Defines different account types.     |
-| `accounts`     | Stores bank and account information. |
+### `account_type`
 
-<details>
-<summary><strong>account_type</strong></summary>
+| Column         | Type      | Description     |
+| -------------- | --------- | --------------- |
+| `id`           | `int`     | 🔑 Primary Key  |
+| `account_type` | `varchar` | Type of account |
 
-| Column         | Type      |
-| -------------- | --------- |
-| `id`           | `int`     |
-| `account_type` | `varchar` |
+### `accounts`
 
-</details>
-
-<details>
-<summary><strong>accounts</strong></summary>
-
-| Column            | Type           | Notes                  |
+| Column            | Type           | Description            |
 | ----------------- | -------------- | ---------------------- |
-| `id`              | `int`          | Primary Key            |
-| `account_number`  | `varchar`      |                        |
+| `id`              | `int`          | 🔑 Primary Key         |
+| `account_number`  | `varchar`      | Account number         |
 | `account_type_id` | `int`          | Account type reference |
-| `bank_name`       | `varchar(100)` |                        |
-| `branch`          | `varchar(100)` |                        |
-| `ifsc_code`       | `varchar(100)` |                        |
-| `balance`         | `numeric`      |                        |
-| `created_by`      | `int`          |                        |
-| `updated_by`      | `int`          |                        |
-| `created_at`      | `timestamp`    |                        |
-| `updated_at`      | `timestamp`    |                        |
-
-</details>
+| `bank_name`       | `varchar(100)` | Bank name              |
+| `branch`          | `varchar(100)` | Branch name            |
+| `ifsc_code`       | `varchar(100)` | IFSC code              |
+| `balance`         | `numeric`      | Current balance        |
+| `created_by`      | `int`          | Creator                |
+| `updated_by`      | `int`          | Last updater           |
+| `created_at`      | `timestamp`    | Record creation time   |
+| `updated_at`      | `timestamp`    | Last update time       |
 
 ---
 
-### 💸 Transactions
+## 💸 Transaction Management
 
-| Table                  | Description                        |
-| ---------------------- | ---------------------------------- |
-| `transaction_type`     | Defines transaction types.         |
-| `transaction_method`   | Defines transaction methods.       |
-| `transaction_category` | Defines transaction categories.    |
-| `transactions`         | Stores all financial transactions. |
-
-<details>
-<summary><strong>transaction_type</strong></summary>
+### `transaction_type`
 
 | Column             | Type      |
 | ------------------ | --------- |
 | `id`               | `int`     |
 | `transaction_type` | `varchar` |
 
-</details>
-
-<details>
-<summary><strong>transaction_method</strong></summary>
+### `transaction_method`
 
 | Column               | Type      |
 | -------------------- | --------- |
 | `id`                 | `int`     |
 | `transaction_method` | `varchar` |
 
-</details>
-
-<details>
-<summary><strong>transaction_category</strong></summary>
+### `transaction_category`
 
 | Column                 | Type      |
 | ---------------------- | --------- |
 | `id`                   | `int`     |
 | `transaction_category` | `varchar` |
 
-</details>
+### `transactions`
 
-<details>
-<summary><strong>transactions</strong></summary>
-
-| Column                    | Type           | Notes                          |
+| Column                    | Type           | Description                    |
 | ------------------------- | -------------- | ------------------------------ |
-| `id`                      | `int`          | Primary Key                    |
+| `id`                      | `int`          | 🔑 Primary Key                 |
 | `transaction_name`        | `varchar(50)`  | Required                       |
 | `transaction_description` | `varchar(300)` | Required                       |
 | `transaction_method_id`   | `int`          | FK → `transaction_method.id`   |
@@ -141,106 +150,109 @@ The application uses the following PostgreSQL tables.
 | `account_number_id`       | `int`          | Account reference              |
 | `amount_paid`             | `numeric`      | Required, minimum `1`          |
 | `account_balance`         | `numeric`      | Nullable                       |
-| `cash_balance`            | `numeric`      |                                |
-| `created_by`              | `int`          |                                |
-| `updated_by`              | `int`          |                                |
-| `created_at`              | `timestamp`    |                                |
-| `updated_at`              | `timestamp`    |                                |
-
-</details>
+| `cash_balance`            | `numeric`      | Cash balance                   |
+| `created_by`              | `int`          | Creator                        |
+| `updated_by`              | `int`          | Last updater                   |
+| `created_at`              | `timestamp`    | Record creation time           |
+| `updated_at`              | `timestamp`    | Last update time               |
 
 ---
 
-### 🎯 Savings Goals
+## 🎯 Savings Goals
 
-| Table           | Description                             |
-| --------------- | --------------------------------------- |
-| `duration`      | Stores available savings durations.     |
-| `savings_goals` | Stores user savings goals and progress. |
-
-<details>
-<summary><strong>duration</strong></summary>
+### `duration`
 
 | Column          | Type      |
 | --------------- | --------- |
 | `id`            | `bigint`  |
 | `duration_name` | `varchar` |
 
-</details>
+### `savings_goals`
 
-<details>
-<summary><strong>savings_goals</strong></summary>
+| Column                  | Type           | Description                  |
+| ----------------------- | -------------- | ---------------------------- |
+| `id`                    | `bigint`       | 🔑 Primary Key               |
+| `saving_name`           | `varchar(100)` | Required                     |
+| `savings_category`      | `varchar(255)` | Required                     |
+| `description`           | `varchar(255)` | Required                     |
+| `savings_for`           | `varchar(100)` | Required                     |
+| `accounts_id`           | `bigint`       | FK → `accounts.id`, nullable |
+| `savings_cash`          | `numeric`      | Used for cash savings        |
+| `savings_amount`        | `integer`      | Required, minimum `1`        |
+| `duration`              | `bigint`       | FK → `duration.id`           |
+| `savings_method`        | `bigint`       | FK → `transaction_type.id`   |
+| `total_account_savings` | `varchar`      | Nullable                     |
+| `totol_cash_saving`     | `varchar`      | Nullable — typo preserved    |
+| `created_by`            | `bigint`       | FK → `users.id`              |
+| `updated_by`            | `bigint`       | FK → `users.id`              |
+| `created_at`            | `timestamp`    | Record creation time         |
+| `updated_at`            | `timestamp`    | Last update time             |
 
-| Column                  | Type           | Notes                                   |
-| ----------------------- | -------------- | --------------------------------------- |
-| `id`                    | `bigint`       | Primary Key                             |
-| `saving_name`           | `varchar(100)` | Required                                |
-| `savings_category`      | `varchar(255)` | Required                                |
-| `description`           | `varchar(255)` | Required                                |
-| `savings_for`           | `varchar(100)` | Required                                |
-| `accounts_id`           | `bigint`       | FK → `accounts.id`, nullable            |
-| `savings_cash`          | `numeric`      | Used for cash savings                   |
-| `savings_amount`        | `integer`      | Required, minimum `1`                   |
-| `duration`              | `bigint`       | FK → `duration.id`                      |
-| `savings_method`        | `bigint`       | FK → `transaction_type.id`              |
-| `total_account_savings` | `varchar`      | Nullable                                |
-| `totol_cash_saving`     | `varchar`      | Nullable — typo intentionally preserved |
-| `created_by`            | `bigint`       | FK → `users.id`, nullable               |
-| `updated_by`            | `bigint`       | FK → `users.id`, nullable               |
-| `created_at`            | `timestamp`    |                                         |
-| `updated_at`            | `timestamp`    |                                         |
-
-> ⚠️ **Important:** `total_account_savings` and `totol_cash_saving` are intentionally stored as `varchar`. The existing controller validates these values using a regular expression before casting them to numeric values.
-
-</details>
+> ⚠️ **Note:** `total_account_savings` and `totol_cash_saving` are intentionally stored as `varchar` because the existing controller performs regex validation before converting their values to numbers. The `totol_cash_saving` spelling is intentionally preserved for compatibility with the current code.
 
 ---
 
-### 📈 Income
+## 📈 Income Tracking
 
-The `income` table stores income records used by the dashboard to calculate income totals and sources.
+### `income`
 
-| Column          | Type        | Notes                           |
-| --------------- | ----------- | ------------------------------- |
-| `id`            | `bigint`    | Primary Key                     |
-| `income_name`   | `varchar`   |                                 |
-| `income_amount` | `numeric`   |                                 |
-| `income_from`   | `varchar`   | Used to identify income sources |
-| `created_by`    | `int`       |                                 |
-| `created_at`    | `timestamp` |                                 |
-| `updated_at`    | `timestamp` |                                 |
-
-> 💡 The dashboard checks for this table using Laravel's `Schema::hasTable()` and `Schema::hasColumn()`, so it is technically optional but recommended.
+| Column          | Type        | Description          |
+| --------------- | ----------- | -------------------- |
+| `id`            | `bigint`    | 🔑 Primary Key       |
+| `income_name`   | `varchar`   | Name of income       |
+| `income_amount` | `numeric`   | Income amount        |
+| `income_from`   | `varchar`   | Income source        |
+| `created_by`    | `int`       | Creator              |
+| `created_at`    | `timestamp` | Record creation time |
+| `updated_at`    | `timestamp` | Last update time     |
 
 ---
 
-## 🔗 Key Relationships
+## 🔗 Database Relationships
 
 ```text
 users
- └── user_types
+├── belongs to → user_types
+└── tracks → created_by / updated_by
 
 accounts
- └── account_type
+└── belongs to → account_type
 
 transactions
- ├── transaction_method
- ├── transaction_type
- ├── transaction_category
- └── accounts
+├── belongs to → transaction_method
+├── belongs to → transaction_type
+├── belongs to → transaction_category
+└── references → accounts
 
 savings_goals
- ├── accounts
- ├── duration
- ├── transaction_type
- └── users
+├── belongs to → accounts
+├── belongs to → duration
+├── references → transaction_type
+└── references → users
 ```
 
 ---
 
-* **Backend:** Laravel
-* **Database:** PostgreSQL
-* **Authentication:** Breeze
-* **Purpose:** Personal Finance & Ledger Management
+## 🎯 Project Vision
 
-> 💰 **The Vault — Take control of your income, expenses, accounts, and savings in one organized place.**
+The Vault is more than just an expense tracker. The project aims to provide a **centralized personal financial management system** where users can understand their financial habits and make more informed decisions.
+
+Future improvements may include:
+
+* 📊 Advanced financial analytics
+* 📅 Monthly and yearly reports
+* 🔔 Budget and spending alerts
+* 📈 Interactive charts and dashboards
+* 🔐 Enhanced user roles and permissions
+* 📤 Exportable financial reports
+* 📱 Improved responsive experience
+
+---
+
+<div align="center">
+
+### 💰 Take control of your money with **The Vault**
+
+**Track • Analyze • Save • Grow**
+
+</div>
